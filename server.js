@@ -3,6 +3,7 @@ const app = express();
 const server = require("http").Server(app);
 app.set("view engine", "ejs");
 app.use(express.static("public"));
+app.use(express.json())
 
 const { v4: uuidv4 } = require("uuid");
 
@@ -28,12 +29,10 @@ app.get("/:room", (req, res) => {
 });
 
 io.on("connection", (socket) => {
-    socket.on("join-room", (roomId, userId, userName) => {
+    socket.on("join-room", (roomId, userId) => {
         socket.join(roomId);
-        socket.on("message", (message) => {
-            io.to(roomId).emit("createMessage", message, userName);
-        });
-    });
+        io.to(roomId).emit("user-connected", userId);
+    })
 });
 
-server.listen(process.env.PORT||3030)
+server.listen(process.env.PORT || 3030);
