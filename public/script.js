@@ -106,25 +106,27 @@ $(function () {
             $("#stop_video").html(html)
         }
     })
-    $("#invite_button").click(function(){
-        const to = prompt("enter the email address")
-        let data = {url:window.location.href,to:to}
-        
+
+    $("#invite_button").click(function () {
+        const to = prompt("Enter the email address")
+        let data = {
+            url: window.location.href,
+            to: to
+        }
         $.ajax({
-            url:"/send-mail",
-            type:"post",
-            data:JSON.stringify(data),
-            dataType:'json',
-            contentType:'application/json',
-            success:function(result){
-                alert("invite sent")   
+            url: "/send-mail",
+            type: "post",
+            data: JSON.stringify(data),
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (result) {
+                alert("Invite sent!")
             },
-            error:function(result){
+            error: function (result) {
                 console.log(result.responseJSON)
             }
         })
     })
-
 
 })
 
